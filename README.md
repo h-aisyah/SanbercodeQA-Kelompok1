@@ -7,7 +7,6 @@ NAMA ANGGOTA KELOMPOK
 2. Fadel Nur Akhmad
 3. Hilzahra Putrie Dienya
 4. Prisilia Febrinti Lumbatoruan
-5. Muhammad Fardan
 
 Link Test Plan 
 --------------
