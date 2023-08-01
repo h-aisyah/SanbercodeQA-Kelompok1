@@ -11,10 +11,10 @@ NAMA ANGGOTA KELOMPOK
 
 Link Test Plan 
 --------------
-
+https://docs.google.com/spreadsheets/d/1MfKHshOkyhFxQtIyUS3w_yE7MxaWERJVa2U9_OhykmQ/edit?usp=sharing
 
 
 Link Test Cases Document
 ------------------------
-
+https://docs.google.com/spreadsheets/d/1YFKRToji2IX6xs4V3XZoiJljZzk-7Hit6ZUWT9HSagY/edit?usp=sharing
 
