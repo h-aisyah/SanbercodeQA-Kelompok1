@@ -96,7 +96,7 @@ class SignUpLumeYoga(unittest.TestCase):
 		self.assertIn('This is a required field.', respon)
 		#jalan
 
-	def test_g_failed_signup_user_registered(self):
+	def g_failed_signup_user_registered(self):
 		driver = self.browser
 		driver.get(self.url_signup)
 		driver.find_element(By.NAME, "firstname").send_keys("Linda")
@@ -108,7 +108,7 @@ class SignUpLumeYoga(unittest.TestCase):
 
 		respon = driver.find_element(By.CLASS_NAME,"message-error.error.message").text
 		self.assertIn('There is already an account with this email address. If you are sure that it is your email address,', respon)
-		#disini masih error, entah kanapa di test auto errornya engga keluar, tapu kalo dimanual keluar tulisan errornya
+		#disini masih error, entah kanapa di test auto errornya engga keluar, tapi kalo dimanual keluar tulisan errornya
 
 	def h_success_change_email(self):
 		driver = self.browser
@@ -126,31 +126,172 @@ class SignUpLumeYoga(unittest.TestCase):
 		self.assertIn('Customer Login', respon)
 		#skip | jalan | buat nanti
 
-
-		#-----
-
-	def b_failed_signup_blank(self):
+	def test_i_invalid_change_email(self):
 		driver = self.browser
-		driver.get(self.url_signup)
-		driver.find_element(By.CLASS_NAME, "action.submit.primary").click()
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("add@ss.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		driver.find_element(By.XPATH, "//input[@id='change-email']").click();
+		driver.find_element(By.ID, "email").clear()
+		driver.find_element(By.ID, "email").send_keys("add@.cm")
+		driver.find_element(By.NAME, "current_password").send_keys("123Qweasd")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
 
-		respon = driver.find_element(By.ID, "firstname-error").text
+		respon = driver.find_element(By.ID, "email-error").text
+		self.assertIn('Please enter a valid email address.', respon)
+		#jalan
+
+	def test_j_change_email_to_same_email(self):
+		driver = self.browser
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("add@ss.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		driver.find_element(By.XPATH, "//input[@id='change-email']").click();
+		driver.find_element(By.ID, "email").clear()
+		driver.find_element(By.ID, "email").send_keys("add@ss.com") #aq@ss.com
+		driver.find_element(By.NAME, "current_password").send_keys("123Qweasd")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
+
+		#respon = driver.find_element(By.XPATH, "//div[@data-bind='html: $parent.prepareMessageForHtml(message.text)']").text
+		#respon = driver.find_element(By.CLASS_NAME, "field.note").text
+		#respon = driver.find_element(By.XPATH, "//div[@class='field note']").text
+		#self.assertIn('If you have an account, sign in with your email address.', respon)
+		#respon = driver.find_element(By.CLASS_NAME, "base").text
+		#self.assertIn('Customer Login', respon)
+		respon = driver.find_element(By.CLASS_NAME, "page-title").text
+		self.assertIn("Edit Account Information", respon)
+		#jalan
+
+	def test_k_failed_change_email_blank(self):
+		driver = self.browser
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("add@ss.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		driver.find_element(By.XPATH, "//input[@id='change-email']").click();
+		driver.find_element(By.ID, "email").clear()
+		driver.find_element(By.NAME, "current_password").send_keys("123Qweasd")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
+
+		respon = driver.find_element(By.ID, "email-error").text
 		self.assertIn('This is a required field.', respon)
-		#skip dulu yang ini
-	
 
-	def failed_signup(self):
+	def l_success_change_password(self):
 		driver = self.browser
-		driver.get(self.url_signup)
-		driver.find_element(By.NAME, "firstname").send_keys("Lala")
-		driver.find_element(By.ID, "lastname").send_keys("Okta")
-		driver.find_element(By.ID, "email_address").send_keys("a@b,com")
-		driver.find_element(By.ID, "password").send_keys("a")
-		driver.find_element(By.ID, "password-confirmation").send_keys("B")
-		driver.find_element(By.CLASS_NAME, "action.submit.primary").click()
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("ad@s.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		driver.find_element(By.NAME, "change_password").click()
+		#driver.find_element(By.XPATH, "//input[@id='change-password']").click();
+		driver.find_element(By.ID, "current-password").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "password").send_keys("123Qweasdz")
+		driver.find_element(By.ID, "password-confirmation").send_keys("123Qweasdz")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
 
-		#respons = driver.find_element(By.CLASS_NAME, "mage-error").text
-		#self.assertIn('Please enter a valid email address (Ex: johndoe@domain.com).', respons)
+		respon = driver.find_element(By.CLASS_NAME, "base").text
+		self.assertIn('Customer Login', respon)
+
+	def test_m_invalid_change_password(self):
+		driver = self.browser
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("ad@s.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		driver.find_element(By.NAME, "change_password").click()
+		#driver.find_element(By.XPATH, "//input[@id='change-password']").click();
+		driver.find_element(By.ID, "current-password").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "password").send_keys("passwd")
+		driver.find_element(By.ID, "password-confirmation").send_keys("passwd")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
+
+		respon = driver.find_element(By.ID, "password-error").text
+		self.assertIn('Minimum length of this field must be equal or greater than 8 symbols. Leading and trailing spaces will be ignored.', respon)
+
+	def test_n_invalid_change_password_blank(self):
+		driver = self.browser
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("ad@s.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		driver.find_element(By.NAME, "change_password").click()
+		#driver.find_element(By.XPATH, "//input[@id='change-password']").click();
+		driver.find_element(By.ID, "current-password").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "password").send_keys("")
+		driver.find_element(By.ID, "password-confirmation").send_keys("passwd")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
+
+		respon = driver.find_element(By.ID, "password-error").text
+		self.assertIn('This is a required field.', respon)
+
+
+	def test_o_invalid_change_password_blank(self):
+		driver = self.browser
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("ad@s.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		driver.find_element(By.NAME, "change_password").click()
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
+
+		respon = driver.find_element(By.ID, "current-password-error").text
+		self.assertIn('This is a required field.', respon)
+
+	def test_p_change_password_with_same_password(self):
+		driver = self.browser
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("ad@s.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		driver.find_element(By.ID, "change-password").click()
+		#driver.find_element(By.XPATH, "//input[@id='change-password']").click();
+		driver.find_element(By.ID, "current-password").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "password").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "password-confirmation").send_keys("123Qqweasd")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
+
+		#respon = driver.find_element(By.XPATH, "//div[@data-bind='html: $parent.prepareMessageForHtml(message.text)']").text
+		respon = driver.find_element(By.CLASS_NAME, "base").text
+		self.assertIn('Customer Login', respon)
+
+	def test_q_change_password_invalid_current_password(self):
+		driver = self.browser
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("ad@s.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		#driver.find_element(By.NAME, "change_password").click()
+		driver.find_element(By.ID, "change-password").click()
+		#driver.find_element(By.XPATH, "//input[@id='change-password']").click();
+		driver.find_element(By.ID, "current-password").send_keys("Qqweasd123")
+		driver.find_element(By.ID, "password").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "password-confirmation").send_keys("123Qqweasd")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
+
+		#respon = driver.find_element(By.XPATH, "//div[@data-bind='html: $parent.prepareMessageForHtml(message.text)']").text
+		respon = driver.find_element(By.CLASS_NAME, "base").text
+		self.assertIn("Edit Account Information", respon)
+
+	def test_r_change_password_invalid_confirm_password(self):
+		driver = self.browser
+		driver.get(self.url_acc)
+		driver.find_element(By.ID, "email").send_keys("ad@s.com")
+		driver.find_element(By.ID, "pass").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "send2").click()
+		#driver.find_element(By.NAME, "change_password").click()
+		driver.find_element(By.ID, "change-password").click()
+		#driver.find_element(By.XPATH, "//input[@id='change-password']").click();
+		driver.find_element(By.ID, "current-password").send_keys("123Qqweasd")
+		driver.find_element(By.ID, "password").send_keys("123Qqweasdz")
+		driver.find_element(By.ID, "password-confirmation").send_keys("123Qqweas")
+		driver.find_element(By.CLASS_NAME, "action.save.primary").click()
+
+		#respon = driver.find_element(By.XPATH, "//div[@data-bind='html: $parent.prepareMessageForHtml(message.text)']").text
+		respon = driver.find_element(By.ID, "password-confirmation-error").text
+		self.assertIn("Please enter the same value again.", respon)
+
 
 	def tearDown(self):
 		self.browser.close()
